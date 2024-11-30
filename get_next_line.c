@@ -6,7 +6,7 @@
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:23 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/11/30 16:21:56 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/11/30 18:55:01 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,65 @@ char	*ft_substr(char *s, int start, size_t len)
 	return (resu);
 }
 
+// char *read_one_line(int fd)
+// {
+//     static char *reste = NULL; // Contient le reste à traiter
+//     char *buf;
+//     char *temp;
+//     char *resu;
+//     int nb_read;
+
+//     if (!reste)
+//         reste = ft_strdup(""); // Initialisation si nécessaire
+    
+//     buf = malloc(sizeof(char) * (BUFFER_SIZE + 1)); // +1 pour '\0'
+//     if (!buf)
+//         return NULL;
+
+//     nb_read = 1; // Initialiser à une valeur non nulle pour entrer dans la boucle
+//     while (nb_read > 0)
+//     {
+//         nb_read = read(fd, buf, BUFFER_SIZE);
+//         if (nb_read < 0)
+//             break;
+//         buf[nb_read] = '\0'; // Terminer la chaîne lue
+//         temp = ft_strjoin(reste, buf); // Ajouter le buffer à `reste`
+//         free(reste); // Libérer l'ancien `reste`
+//         reste = temp;
+
+//         if (ft_strchr(reste, '\n')) // Une ligne complète est trouvée
+//         {
+//             resu = ft_substr(reste, 0, ft_strchr(reste, '\n') - reste); // Extraire la ligne
+//             temp = ft_strdup(ft_strchr(reste, '\n') + 1); // Récupérer le nouveau reste
+//             free(reste); // Libérer l'ancien `reste`
+//             reste = temp;
+//             free(buf); // Libérer le buffer
+//             return resu; // Retourner la ligne extraite
+//         }
+//     }
+
+//     // Gérer la fin de fichier ou reste final
+//     free(buf); // Libérer le buffer
+//     if (*reste) // Si `reste` contient encore des données
+//     {
+//         resu = ft_strdup(reste);
+//         free(reste);
+//         reste = NULL;
+//         return resu;
+//     }
+//     free(reste);
+//     reste = NULL;
+//     return NULL; // Fin du fichier ou erreur
+// }
+
+
 char	*read_one_line(int fd)
 {
 	static char		*reste;
 	int			nb_read;
 	char		*buf;
 	char		*temp;
+	char		*resu;
 
 	buf = malloc(sizeof(char) * (BUFFER_SIZE));
 	if (!buf)
@@ -62,20 +115,38 @@ char	*read_one_line(int fd)
 		free(buf);
 		return (0);
 	}
+
 	nb_read = -1;
-	reste = ft_strdup("");
+	if (!reste)
+		reste = ft_strdup("");
+	resu = ft_strdup("");
 	while (nb_read != 0)
 	{
 		nb_read = read(fd, buf, BUFFER_SIZE);
+		// printf("%s", buf);
+		if (nb_read < 0)
+            break	;
 		temp = ft_strjoin(reste, buf);
 		reste = temp;
 		if (ft_strchr(reste, '\n'))
 		{
-			reste = ft_substr(reste, 0, ft_strchr(reste, '\n') - reste + 1) ;
+			reste[nb_read] = '\0';
+			resu = ft_substr(reste, 0, ft_strchr(reste, '\n') - reste);
+			reste = ft_strdup(&reste[ft_strchr(reste, '\n') - reste + 1]);
+			// printf("%s\n", resu);
+			// printf("%s\n", reste);
+			reste = temp;
 			break;
 		}
 	}
-	return (reste);
+	if (*reste)
+    {
+        resu = ft_strdup(reste);
+        free(reste);
+        reste = NULL;
+        return resu;
+    }
+	return (resu);
 }
 
 int	main()
@@ -83,8 +154,15 @@ int	main()
 	int fd;
 
 	fd = open("test.txt",  O_RDONLY, O_CREAT);
+	// read_one_line(fd);
+	// printf("%c",'\n');
+	// read_one_line(fd);
+	// read_one_line(fd);
+
 	printf("%s\n",read_one_line(fd));
-	// printf("%s\n",read_one_line(fd));
+	printf("%s\n",read_one_line(fd));
+	printf("%s\n",read_one_line(fd));
+	//printf("%s\n",read_one_line(fd));
 
 	return(0);
 }
