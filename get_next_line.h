@@ -6,7 +6,7 @@
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:25 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/11/29 18:43:17 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/11/30 14:44:26 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *src);
 char	*ft_strchr(char *s, int c);
+int		ft_strlen(const char *str);
 
 
  #endif
