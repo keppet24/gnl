@@ -1,3 +1,2 @@
-salut_toi
-ca_va
-tu_fais_quoi
+Hello_Dolly.
+Goodbye.
