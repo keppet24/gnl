@@ -6,13 +6,13 @@
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:20 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/11/30 14:44:10 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/12/02 19:22:10 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	int	i;
 

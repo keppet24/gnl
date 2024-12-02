@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 15:46:23 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/02 19:02:26 by oettaqi          ###   ########.fr       */
+/*   Created: 2024/12/01 17:43:18 by othmaneetta       #+#    #+#             */
+/*   Updated: 2024/12/02 15:44:00 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,65 @@ char	*ft_substr(char *s, int start, size_t len)
 	return (resu);
 }
 
+// char	*get_next_line(int fd)
+// {
+// 	static char	*stash;
+// 	char	*temp;
+// 	char	*buf;
+// 	char	*line;
+// 	int		nb_read;
+
+// 	temp = ft_strdup("");
+// 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+// 	if (!buf)
+// 	{
+// 		free(buf);
+// 		return (NULL);
+// 	}
+// 	nb_read = 1;
+// 	while (nb_read > 0)
+// 	{
+// 		nb_read = read(fd, buf, BUFFER_SIZE);
+// 		buf[nb_read] = 0;
+// 		stash = ft_strjoin(temp, buf);
+// 		free(temp);
+// 		temp = stash;
+// 		if (ft_strchr(stash, '\n'))
+// 		{
+// 			line = ft_substr(stash, 0, ft_strchr(stash, '\n') - stash + 1);
+// 			stash = ft_strdup(&stash[ft_strchr(stash, '\n') - stash + 1 ]);
+// 			temp = stash;
+// 			break;
+// 		}
+// 	}
+// 	if (nb_read == 0)
+// 		return (stash);
+// 	free(buf);
+// 	return (line);
+// } 
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char		*line;
-	char		*buf;
-	char		*temp;
-	int			nb_read;
+	char	*temp;
+	char	*buf;
+	char	*line;
+	int		nb_read;
 
-	nb_read = 1;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (!stash)
+		stash = ft_strdup("");
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
-		return (0);
-	if (!stash)
-	stash = ft_strdup("");
+		return (NULL);
+	nb_read = 1;
 	while (nb_read > 0)
 	{
 		nb_read = read(fd, buf, BUFFER_SIZE);
 		if (nb_read < 0)
 			break;
-		buf[nb_read] = 0;
+		buf[nb_read] = '\0';
 		temp = stash;
 		stash = ft_strjoin(temp, buf);
 		free(temp);
@@ -83,15 +122,17 @@ char	*get_next_line(int fd)
 		}
 	}
 	free(buf);
-	if (stash)
+	if (stash && *stash)
 	{
-		line = ft_strdup(stash);
-		free(stash);
+		line = stash;
 		stash = NULL;
-		return (line);			
+		free(stash);
+		return (line);
 	}
+	free(stash);
 	return (NULL);
 }
+
 
 int	main()
 {
@@ -102,12 +143,7 @@ int	main()
 	s = get_next_line(fd);
 	printf("%s",s);
 	free(s);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
+	fd = -1;
 	s = get_next_line(fd);
 	printf("%s",s);
 	free(s);
