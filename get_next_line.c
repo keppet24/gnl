@@ -6,7 +6,7 @@
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:46:23 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/02 19:02:26 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/12/03 14:17:59 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*part(char *particulier)
 	return (particulier);
 }
 
-char	*ft_substr(char *s, int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
 	char			*resu;
@@ -62,7 +62,7 @@ char	*get_next_line(int fd)
 	if (!buf)
 		return (0);
 	if (!stash)
-	stash = ft_strdup("");
+		stash = ft_strdup("");
 	while (nb_read > 0)
 	{
 		nb_read = read(fd, buf, BUFFER_SIZE);

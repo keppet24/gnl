@@ -6,15 +6,15 @@
 /*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:20 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/02 19:22:10 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:57:58 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -61,7 +61,7 @@ char	*ft_strchr(char *s, int c)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		size2;
-	int		i;
+	size_t		i;
 	char	*resu;
 	int		j;
 
