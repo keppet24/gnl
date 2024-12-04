@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othmaneettaqi <othmaneettaqi@student.42    +#+  +:+       +#+        */
+/*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:46:23 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/04 14:05:00 by othmaneetta      ###   ########.fr       */
+/*   Updated: 2024/12/04 18:36:30 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,22 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (resu);
 }
 
-char	*last_iter(char **stash, char *line)
+char	*last_iter(char **stash)
 {
+	char	*line;
+	
 	line = ft_strdup(*stash);
 	if (!line)
 		return (NULL);
 	free(*stash);
 	*stash = NULL;
-	return (line);	
+	return (line);
 }
 
-char	*get_a_line(char **temp, char **buf, char **stash, char *line)
+char	*get_a_line(char **temp, char **buf, char **stash)
 {
+	char	*line;
+	
 	line = ft_substr(*stash, 0, ft_strchr(*stash, '\n') - *stash + 1);
 	*temp = *stash;
 	*stash = ft_strdup(&(*stash)[ft_strchr(*stash, '\n') - *stash + 1]);
@@ -71,7 +75,6 @@ void	auxiliary(char **buf, char **temp, char **stash, int nb_read)
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char		*line;
 	char		*buf;
 	char		*temp;
 	int			nb_read;
@@ -86,34 +89,34 @@ char	*get_next_line(int fd)
 	{
 		nb_read = read(fd, buf, BUFFER_SIZE);
 		if (nb_read < 0)
-			break;
+			break ;
 		auxiliary(&buf, &temp, &stash, nb_read);
 		if (ft_strchr(stash, '\n'))
-			return (get_a_line(&temp, &buf, &stash, line));
+			return (get_a_line(&temp, &buf, &stash));
 	}
 	free(buf);
 	if (stash)
-		return (last_iter(&stash, line));			
+		return (last_iter(&stash));
 	return (NULL);
 }
 
-int	main()
-{
-	int fd;
-	char *s;
+// int	main()
+// {
+// 	int fd;
+// 	char *s;
 
-	fd = open("test.txt",  O_RDONLY);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
-	s = get_next_line(fd);
-	printf("%s",s);
-	free(s);
-	return(0);
-}
+// 	fd = open("test.txt",  O_RDONLY);
+// 	s = get_next_line(fd);
+// 	printf("%s",s);
+// 	free(s);
+// 	s = get_next_line(fd);
+// 	printf("%s",s);
+// 	free(s);
+// 	s = get_next_line(fd);
+// 	printf("%s",s);
+// 	free(s);
+// 	s = get_next_line(fd);
+// 	printf("%s",s);
+// 	free(s);
+// 	return(0);
+// }

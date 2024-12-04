@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othmaneettaqi <othmaneettaqi@student.42    +#+  +:+       +#+        */
+/*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:25 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/04 14:01:05 by othmaneetta      ###   ########.fr       */
+/*   Updated: 2024/12/04 16:27:12 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-
-#ifndef BUFFER_SIZE 
-# define BUFFER_SIZE 42
-#endif
-
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <fcntl.h>  
 # include <stdlib.h>
@@ -31,6 +29,4 @@ char	*ft_strchr(char *s, int c);
 size_t	ft_strlen(const char *str);
 char	*part(char *particulier);
 
-
-
- #endif
+#endif

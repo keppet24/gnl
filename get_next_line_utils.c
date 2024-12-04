@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othmaneettaqi <othmaneettaqi@student.42    +#+  +:+       +#+        */
+/*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:20 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/04 14:00:24 by othmaneetta      ###   ########.fr       */
+/*   Updated: 2024/12/04 16:15:38 by oettaqi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strchr(char *s, int c)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		size2;
-	size_t		i;
+	size_t	i;
 	char	*resu;
 	int		j;
 
