@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: othmaneettaqi <othmaneettaqi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:50:20 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/03 13:57:58 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:00:24 by othmaneetta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	resu[i] = '\0';
 	return (resu);
+}
+
+char	*part(char *particulier)
+{
+	particulier = malloc(sizeof(char) * 1);
+	if (!particulier)
+		return (0);
+	particulier[0] = 0;
+	return (particulier);
 }
 
 // int main()

@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oettaqi <oettaqi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: othmaneettaqi <othmaneettaqi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:46:23 by oettaqi           #+#    #+#             */
-/*   Updated: 2024/12/03 14:17:59 by oettaqi          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:05:00 by othmaneetta      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static char	*part(char *particulier)
-{
-	particulier = malloc(sizeof(char) * 1);
-	if (!particulier)
-		return (0);
-	particulier[0] = 0;
-	return (particulier);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -49,6 +40,34 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (resu);
 }
 
+char	*last_iter(char **stash, char *line)
+{
+	line = ft_strdup(*stash);
+	if (!line)
+		return (NULL);
+	free(*stash);
+	*stash = NULL;
+	return (line);	
+}
+
+char	*get_a_line(char **temp, char **buf, char **stash, char *line)
+{
+	line = ft_substr(*stash, 0, ft_strchr(*stash, '\n') - *stash + 1);
+	*temp = *stash;
+	*stash = ft_strdup(&(*stash)[ft_strchr(*stash, '\n') - *stash + 1]);
+	free(*temp);
+	free(*buf);
+	return (line);
+}
+
+void	auxiliary(char **buf, char **temp, char **stash, int nb_read)
+{
+	(*buf)[nb_read] = 0;
+	*temp = *stash;
+	*stash = ft_strjoin(*temp, *buf);
+	free(*temp);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
@@ -68,28 +87,13 @@ char	*get_next_line(int fd)
 		nb_read = read(fd, buf, BUFFER_SIZE);
 		if (nb_read < 0)
 			break;
-		buf[nb_read] = 0;
-		temp = stash;
-		stash = ft_strjoin(temp, buf);
-		free(temp);
+		auxiliary(&buf, &temp, &stash, nb_read);
 		if (ft_strchr(stash, '\n'))
-		{
-			line = ft_substr(stash, 0, ft_strchr(stash, '\n') - stash + 1);
-			temp = stash;
-			stash = ft_strdup(&stash[ft_strchr(stash, '\n') - stash + 1]);
-			free(temp);
-			free(buf);
-			return (line);
-		}
+			return (get_a_line(&temp, &buf, &stash, line));
 	}
 	free(buf);
 	if (stash)
-	{
-		line = ft_strdup(stash);
-		free(stash);
-		stash = NULL;
-		return (line);			
-	}
+		return (last_iter(&stash, line));			
 	return (NULL);
 }
 
